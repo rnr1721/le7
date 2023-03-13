@@ -26,7 +26,7 @@
     ],
     "require": {
         "php": ">=8.1",
-        "rnr1721/le7-view": "^0.0.2"
+        "rnr1721/le7-view": "^1.0.0"
     },
     "require-dev": {
         "vimeo/psalm": "^5.7",
