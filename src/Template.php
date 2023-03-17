@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Php;
+namespace Core\View\Php;
 
 use \Exception;
 use function file_exists;

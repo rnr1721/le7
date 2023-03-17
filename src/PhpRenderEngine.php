@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\View\Php;
+namespace Core\View\Php;
 
-use App\View\Interfaces\WebPage;
-use App\View\Interfaces\ViewTopology;
+use Core\View\Interfaces\WebPage;
+use Core\View\Interfaces\ViewTopology;
 use function extract;
 use function ob_start;
 use function ob_get_clean;
@@ -14,19 +14,14 @@ use function htmlspecialchars;
 class PhpRenderEngine
 {
 
-    /**
-     * @var WebPage
-     */
-    private WebPage $webPage;
     private ViewTopology $viewTopology;
     private Template $template;
     public array $vars = array();
 
-    public function __construct(Template $template, ViewTopology $viewTopology, WebPage $webPage)
+    public function __construct(Template $template, ViewTopology $viewTopology)
     {
         $this->template = $template;
         $this->viewTopology = $viewTopology;
-        $this->webPage = $webPage;
     }
 
     /**
@@ -68,5 +63,5 @@ class PhpRenderEngine
         }
         return $default;
     }
-
+    
 }

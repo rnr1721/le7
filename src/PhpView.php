@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\View\Php;
+namespace Core\View\Php;
 
-use App\View\Interfaces\WebPage;
-use App\View\Interfaces\View;
+use Core\View\Interfaces\WebPage;
+use Core\View\Interfaces\View;
 use function array_merge;
 
 class PhpView implements View
@@ -35,7 +35,7 @@ class PhpView implements View
         $webpage = $this->webPage->getWebpage();
 
         $finalVars = array_merge($vars, $webpage);
-
+ 
         $this->view->vars = $finalVars;
 
         return $this->view->include($layout);

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\View\Php;
+namespace Core\View\Php;
 
-use App\View\Interfaces\WebPage;
-use App\View\Interfaces\View;
-use App\View\Interfaces\ViewAdapter;
-use App\View\Interfaces\ViewTopology;
+use Core\View\Interfaces\WebPage;
+use Core\View\Interfaces\View;
+use Core\View\Interfaces\ViewAdapter;
+use Core\View\Interfaces\ViewTopology;
 
 class PhpViewAdapter implements ViewAdapter
 {
@@ -26,7 +26,7 @@ class PhpViewAdapter implements ViewAdapter
         $template = new Template();
         $template->setPath($this->viewTopology->getTemplatePath());
         $template->setPath($this->viewTopology->getTemplateSystemPath());
-        $phpView = new PhpRenderEngine($template, $this->viewTopology, $this->webPage);
+        $phpView = new PhpRenderEngine($template, $this->viewTopology);
         return new PhpView($phpView, $this->webPage);
     }
 
