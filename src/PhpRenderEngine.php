@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
-use Core\View\Interfaces\WebPage;
-use Core\View\Interfaces\ViewTopology;
+use Core\Interfaces\ViewTopology;
 use function extract;
 use function ob_start;
 use function ob_get_clean;

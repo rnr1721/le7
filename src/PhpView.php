@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
-use Core\View\Interfaces\WebPage;
-use Core\View\Interfaces\View;
+use Core\Interfaces\WebPage;
+use Core\Interfaces\View;
 use function array_merge;
 
 class PhpView implements View

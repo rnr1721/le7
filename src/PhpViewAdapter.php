@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
-use Core\View\Interfaces\WebPage;
-use Core\View\Interfaces\View;
-use Core\View\Interfaces\ViewAdapter;
-use Core\View\Interfaces\ViewTopology;
+use Core\Interfaces\WebPage;
+use Core\Interfaces\View;
+use Core\Interfaces\ViewAdapter;
+use Core\Interfaces\ViewTopology;
 
 class PhpViewAdapter implements ViewAdapter
 {
