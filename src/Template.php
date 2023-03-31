@@ -4,13 +4,22 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
+use Psr\Log\LoggerInterface;
 use \Exception;
-use function file_exists;
+use function file_exists,
+             is_string,
+             in_array;
 
 class Template
 {
 
     private array $path = [];
+    private LoggerInterface $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     public function exists(string $template): string
     {
@@ -21,13 +30,27 @@ class Template
             }
         }
 
+        $this->logger->debug("Template not found:" . $template);
         throw new Exception("Template not found:" . $template);
     }
 
-    public function setPath(string $path): self
+    public function setPath(string|array $path): self
     {
-        $this->path[] = $path;
+        if (is_string($path)) {
+            $this->addPathItem($path);
+        } else {
+            foreach ($path as $item) {
+                $this->addPathItem($item);
+            }
+        }
         return $this;
+    }
+
+    private function addPathItem(string $path): void
+    {
+        if (!in_array($path, $this->path)) {
+            $this->path[] = $path;
+        }
     }
 
 }

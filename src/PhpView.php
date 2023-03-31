@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
+use Core\View\ViewTrait;
 use Core\Interfaces\WebPage;
 use Core\Interfaces\View;
-use function array_merge;
+use Psr\SimpleCache\CacheInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class PhpView implements View
 {
 
-    private array $vars = array();
+    use ViewTrait;
 
     /**
      * @var PhpRenderEngine
@@ -23,20 +26,30 @@ class PhpView implements View
      */
     private WebPage $webPage;
 
-    public function __construct(PhpRenderEngine $view, WebPage $webPage)
+    public function __construct(
+            PhpRenderEngine $view,
+            WebPage $webPage,
+            ServerRequestInterface $request,
+            ResponseInterface $response,
+            CacheInterface $cache
+    )
     {
         $this->view = $view;
         $this->webPage = $webPage;
+        $this->request = $request;
+        $this->response = $response;
+        $this->cache = $cache;
     }
 
-    public function render(string $layout, array $vars = []): string
+    public function fetch(string $layout, array $vars = []): string
     {
 
-        $webpage = $this->webPage->getWebpage();
+        $this->assign($this->webPage->getWebpage());
+        $this->assign($vars);
 
-        $finalVars = array_merge($vars, $webpage);
- 
-        $this->view->vars = $finalVars;
+        $this->view->vars = $this->vars;
+
+        $this->clear();
 
         return $this->view->include($layout);
     }

@@ -1,6 +1,6 @@
 {
     "name": "rnr1721/le7-view-php",
-    "description": "Lightweight PHP framework with API,CLI,WEB controllers - php view renderer",
+    "description": "PHP View for le7 PHP MVC framework or any PHP PSR project",
     "keywords": ["le7", "le7-framework", "framework", "view", "component"],
     "authors": [
         {
@@ -18,18 +18,28 @@
             "Core\\View\\Php\\": "src"
         }
     },
-    "authors": [
-        {
-            "name": "rnr1721",
-            "email": "rnr1721@gmail.com"
-        }
-    ],
     "require": {
         "php": ">=8.1",
+        "psr/http-message": "^1.0",
+        "psr/simple-cache": "^3.0",
+        "psr/log": "^3.0",
         "rnr1721/le7-view": "^1.0.0"
     },
     "require-dev": {
         "vimeo/psalm": "^5.7",
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "nyholm/psr7": "^1.5",
+        "nyholm/psr7-server": "^1.0",
+        "rnr1721/le7-cache": "^1.0",
+        "rnr1721/le7-logger": "^1.0",
+        "rnr1721/le7-testing": "^1.0"
+    },
+    "scripts": {
+        "test": [
+            "@phpunit",
+            "@psalm"
+        ],
+        "phpunit": "phpunit",
+        "psalm": "psalm"
     }
 }
