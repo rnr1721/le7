@@ -75,9 +75,9 @@ class ViewTest extends PHPUnit\Framework\TestCase
         $viewTopology = $this->getViewTopology();
         $webPage = new WebPageGeneric($viewTopology);
         $request = $this->megaFactory->getServer()->getServerRequest('https://example.com/page/open', 'GET');
-        $response = $this->megaFactory->getServer()->getResponse(200, '');
+        $responseFactory = $this->megaFactory->getServer()->getResponseFactory();
 
-        return new PhpViewAdapter($viewTopology, $webPage, $request, $response, $cache, $logger);
+        return new PhpViewAdapter($viewTopology, $webPage, $request, $responseFactory, $cache, $logger);
     }
 
     public function getViewTopology(): ViewTopology
