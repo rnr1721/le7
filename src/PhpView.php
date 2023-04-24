@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
-use Core\View\ViewTrait;
 use Core\Interfaces\WebPage;
 use Core\Interfaces\View;
+use Core\View\ViewTrait;
+use Core\View\ViewException;
 use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use \Throwable;
 
 class PhpView implements View
 {
@@ -44,14 +46,18 @@ class PhpView implements View
     public function fetch(string $layout, array $vars = []): string
     {
 
-        $this->assign($this->webPage->getWebpage());
-        $this->assign($vars);
+        try {
+            $this->assign($this->webPage->getWebpage());
+            $this->assign($vars);
 
-        $this->view->vars = $this->vars;
+            $this->view->vars = $this->vars;
 
-        $this->clear();
+            $this->clear();
 
-        return $this->view->include($layout);
+            return $this->view->include($layout);
+        } catch (Throwable $ex) {
+            throw new ViewException($ex->getMessage());
+        }
     }
 
 }

@@ -12,7 +12,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
-use Psr\Log\LoggerInterface;
 
 class PhpViewAdapter implements ViewAdapter
 {
@@ -22,15 +21,13 @@ class PhpViewAdapter implements ViewAdapter
     private ResponseFactoryInterface $responseFactory;
     private WebPage $webPage;
     private ViewTopology $viewTopology;
-    private LoggerInterface $logger;
 
     public function __construct(
             ViewTopology $viewTopology,
             WebPage $webPage,
             ServerRequestInterface $request,
             ResponseFactoryInterface $responseFactory,
-            CacheInterface $cache,
-            LoggerInterface $logger
+            CacheInterface $cache
     )
     {
         $this->viewTopology = $viewTopology;
@@ -38,7 +35,6 @@ class PhpViewAdapter implements ViewAdapter
         $this->request = $request;
         $this->responseFactory = $responseFactory;
         $this->cache = $cache;
-        $this->logger = $logger;
     }
 
     public function getView(array|string|null $templatePath = null, ?ResponseInterface $response = null): View
@@ -52,7 +48,7 @@ class PhpViewAdapter implements ViewAdapter
             $templatePath = $this->viewTopology->getTemplatePath();
         }
 
-        $template = new Template($this->logger);
+        $template = new Template();
         $template->setPath($templatePath);
         $phpView = new PhpRenderEngine($template, $this->viewTopology);
 
