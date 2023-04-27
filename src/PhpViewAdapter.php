@@ -8,6 +8,7 @@ use Core\Interfaces\WebPage;
 use Core\Interfaces\View;
 use Core\Interfaces\ViewAdapter;
 use Core\Interfaces\ViewTopology;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -21,13 +22,15 @@ class PhpViewAdapter implements ViewAdapter
     private ResponseFactoryInterface $responseFactory;
     private WebPage $webPage;
     private ViewTopology $viewTopology;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
             ViewTopology $viewTopology,
             WebPage $webPage,
             ServerRequestInterface $request,
             ResponseFactoryInterface $responseFactory,
-            CacheInterface $cache
+            CacheInterface $cache,
+            EventDispatcherInterface $eventDispatcher
     )
     {
         $this->viewTopology = $viewTopology;
@@ -35,6 +38,7 @@ class PhpViewAdapter implements ViewAdapter
         $this->request = $request;
         $this->responseFactory = $responseFactory;
         $this->cache = $cache;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getView(array|string|null $templatePath = null, ?ResponseInterface $response = null): View
@@ -52,7 +56,14 @@ class PhpViewAdapter implements ViewAdapter
         $template->setPath($templatePath);
         $phpView = new PhpRenderEngine($template, $this->viewTopology);
 
-        return new PhpView($phpView, $this->webPage, $this->request, $response, $this->cache);
+        return new PhpView(
+                $phpView,
+                $this->webPage,
+                $this->request,
+                $response,
+                $this->cache,
+                $this->eventDispatcher
+        );
     }
 
 }

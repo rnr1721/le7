@@ -6,6 +6,11 @@ use Core\View\Php\PhpViewAdapter;
 use Core\View\ViewTopologyGeneric;
 use Core\View\WebPageGeneric;
 use Core\Testing\MegaFactory;
+use Core\EventDispatcher\EventDispatcher;
+use Core\EventDispatcher\Providers\ListenerProviderDefault;
+use DI\ContainerBuilder;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Container\ContainerInterface;
 use Psr\SimpleCache\CacheInterface;
 
 require_once 'vendor/autoload.php';
@@ -75,8 +80,9 @@ class ViewTest extends PHPUnit\Framework\TestCase
         $webPage = new WebPageGeneric($viewTopology);
         $request = $this->megaFactory->getServer()->getServerRequest('https://example.com/page/open', 'GET');
         $responseFactory = $this->megaFactory->getServer()->getResponseFactory();
+        $eventDispatcher = $this->getEventDispatcher();
 
-        return new PhpViewAdapter($viewTopology, $webPage, $request, $responseFactory, $cache);
+        return new PhpViewAdapter($viewTopology, $webPage, $request, $responseFactory, $cache, $eventDispatcher);
     }
 
     public function getViewTopology(): ViewTopology
@@ -91,6 +97,19 @@ class ViewTest extends PHPUnit\Framework\TestCase
                 ->setThemeUrl('https://example.com/theme')
                 ->setTemplatePath($this->testsDirectory . DIRECTORY_SEPARATOR . 'mock_templates');
         return $viewTopology;
+    }
+
+    public function getEventDispatcher(): EventDispatcherInterface
+    {
+        $eventListenerProvider = new ListenerProviderDefault();
+        return new EventDispatcher($eventListenerProvider, $this->getContainer());
+    }
+
+    public function getContainer(): ContainerInterface
+    {
+        $cb = new ContainerBuilder();
+        $cb->addDefinitions();
+        return $cb->build();
     }
 
 }

@@ -8,6 +8,7 @@ use Core\Interfaces\WebPage;
 use Core\Interfaces\View;
 use Core\View\ViewTrait;
 use Core\View\ViewException;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -33,7 +34,8 @@ class PhpView implements View
             WebPage $webPage,
             ServerRequestInterface $request,
             ResponseInterface $response,
-            CacheInterface $cache
+            CacheInterface $cache,
+            EventDispatcherInterface $eventDispatcher
     )
     {
         $this->view = $view;
@@ -41,6 +43,7 @@ class PhpView implements View
         $this->request = $request;
         $this->response = $response;
         $this->cache = $cache;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function fetch(string $layout, array $vars = []): string
