@@ -29,7 +29,7 @@
         "vimeo/psalm": "^5.7",
         "phpunit/phpunit": "^10.0",
         "nyholm/psr7": "^1.5",
-        "nyholm/psr7-server": "^1.0",
+        "rnr1721/psr7-server": "^1.0",
         "rnr1721/le7-cache": "^1.0",
         "rnr1721/le7-logger": "^1.0",
         "rnr1721/le7-testing": "^1.0",

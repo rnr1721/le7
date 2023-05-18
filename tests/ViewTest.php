@@ -8,6 +8,7 @@ use Core\View\WebPageGeneric;
 use Core\Testing\MegaFactory;
 use Core\EventDispatcher\EventDispatcher;
 use Core\EventDispatcher\Providers\ListenerProviderDefault;
+use Core\View\AssetsCollectionGeneric;
 use DI\ContainerBuilder;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Container\ContainerInterface;
@@ -77,7 +78,8 @@ class ViewTest extends PHPUnit\Framework\TestCase
         }
 
         $viewTopology = $this->getViewTopology();
-        $webPage = new WebPageGeneric($viewTopology);
+        $assetsCollection = new AssetsCollectionGeneric();
+        $webPage = new WebPageGeneric($viewTopology,$assetsCollection);
         $request = $this->megaFactory->getServer()->getServerRequest('https://example.com/page/open', 'GET');
         $responseFactory = $this->megaFactory->getServer()->getResponseFactory();
         $eventDispatcher = $this->getEventDispatcher();
