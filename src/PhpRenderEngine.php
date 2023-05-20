@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
-use Core\Interfaces\ViewTopology;
+use Core\Interfaces\ViewTopologyInterface;
 use function extract;
 use function ob_start;
 use function ob_get_clean;
@@ -13,11 +13,11 @@ use function htmlspecialchars;
 class PhpRenderEngine
 {
 
-    private ViewTopology $viewTopology;
+    private ViewTopologyInterface $viewTopology;
     private Template $template;
     public array $vars = array();
 
-    public function __construct(Template $template, ViewTopology $viewTopology)
+    public function __construct(Template $template, ViewTopologyInterface $viewTopology)
     {
         $this->template = $template;
         $this->viewTopology = $viewTopology;

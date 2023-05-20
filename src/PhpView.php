@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
-use Core\Interfaces\WebPage;
-use Core\Interfaces\View;
+use Core\Interfaces\WebPageInterface;
+use Core\Interfaces\ViewInterface;
 use Core\View\ViewTrait;
 use Core\View\ViewException;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -14,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use \Throwable;
 
-class PhpView implements View
+class PhpView implements ViewInterface
 {
 
     use ViewTrait;
@@ -25,13 +25,13 @@ class PhpView implements View
     private PhpRenderEngine $view;
 
     /**
-     * @var WebPage
+     * @var WebPageInterface
      */
-    private WebPage $webPage;
+    private WebPageInterface $webPage;
 
     public function __construct(
             PhpRenderEngine $view,
-            WebPage $webPage,
+            WebPageInterface $webPage,
             ServerRequestInterface $request,
             ResponseInterface $response,
             CacheInterface $cache,

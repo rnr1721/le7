@@ -4,29 +4,29 @@ declare(strict_types=1);
 
 namespace Core\View\Php;
 
-use Core\Interfaces\WebPage;
-use Core\Interfaces\View;
-use Core\Interfaces\ViewAdapter;
-use Core\Interfaces\ViewTopology;
+use Core\Interfaces\WebPageInterface;
+use Core\Interfaces\ViewInterface;
+use Core\Interfaces\ViewAdapterInterface;
+use Core\Interfaces\ViewTopologyInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
 
-class PhpViewAdapter implements ViewAdapter
+class PhpViewAdapter implements ViewAdapterInterface
 {
 
     private CacheInterface $cache;
     private ServerRequestInterface $request;
     private ResponseFactoryInterface $responseFactory;
-    private WebPage $webPage;
-    private ViewTopology $viewTopology;
+    private WebPageInterface $webPage;
+    private ViewTopologyInterface $viewTopology;
     private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
-            ViewTopology $viewTopology,
-            WebPage $webPage,
+            ViewTopologyInterface $viewTopology,
+            WebPageInterface $webPage,
             ServerRequestInterface $request,
             ResponseFactoryInterface $responseFactory,
             CacheInterface $cache,
@@ -41,7 +41,7 @@ class PhpViewAdapter implements ViewAdapter
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function getView(array|string|null $templatePath = null, ?ResponseInterface $response = null): View
+    public function getView(array|string|null $templatePath = null, ?ResponseInterface $response = null): ViewInterface
     {
 
         if ($response === null) {

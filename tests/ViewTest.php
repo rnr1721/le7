@@ -1,7 +1,7 @@
 <?php
 
-use Core\Interfaces\ViewTopology;
-use Core\Interfaces\ViewAdapter;
+use Core\Interfaces\ViewTopologyInterface;
+use Core\Interfaces\ViewAdapterInterface;
 use Core\View\Php\PhpViewAdapter;
 use Core\View\ViewTopologyGeneric;
 use Core\View\WebPageGeneric;
@@ -71,7 +71,7 @@ class ViewTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('text/html', $cachedResponse->getHeaderLine('Content-Type'));
     }
 
-    public function getPhpAdapter(CacheInterface $cache = null): ViewAdapter
+    public function getPhpAdapter(CacheInterface $cache = null): ViewAdapterInterface
     {
         if (empty($cache)) {
             $cache = $this->megaFactory->getCache()->getFileCache();
@@ -87,7 +87,7 @@ class ViewTest extends PHPUnit\Framework\TestCase
         return new PhpViewAdapter($viewTopology, $webPage, $request, $responseFactory, $cache, $eventDispatcher);
     }
 
-    public function getViewTopology(): ViewTopology
+    public function getViewTopology(): ViewTopologyInterface
     {
         $viewTopology = new ViewTopologyGeneric();
         $viewTopology->setBaseUrl('https://example.com')
