@@ -36,6 +36,10 @@
         "rnr1721/le7-event-manager": "^1.0",
         "php-di/php-di": "^7.0"
     },
+    "conflict": {
+        "rnr1721/le7-view-twig": "*",
+        "rnr1721/le7-view-smarty": "*"
+    },
     "scripts": {
         "test": [
             "@phpunit",
